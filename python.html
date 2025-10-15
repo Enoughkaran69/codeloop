@@ -17,12 +17,13 @@
       font-family: "Inter", "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--text);
-      overflow: hidden;
-      height: 100vh;
+      overflow-x: hidden;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      padding: 80px 20px;
     }
 
     canvas {
@@ -36,18 +37,42 @@
     }
 
     h1 {
-      font-size: 2.6rem;
+      font-size: 2.8rem;
       font-family: "Patrick Hand", cursive;
       color: var(--accent);
-      margin-bottom: 10px;
+      margin-bottom: 25px;
+    }
+
+    .topic {
+      max-width: 800px;
+      width: 100%;
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px var(--shadow);
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .topic:hover {
+      transform: translateY(-4px);
+      background: #f3f4ff;
+      box-shadow: 0 10px 22px rgba(91, 108, 255, 0.15);
+    }
+
+    h2 {
+      font-family: "Patrick Hand", cursive;
+      color: var(--accent);
+      margin-bottom: 8px;
     }
 
     p {
       font-size: 1rem;
-      color: #555;
-      max-width: 500px;
-      text-align: center;
-      margin: 0 20px 30px;
+      color: #444;
+      line-height: 1.6;
+      margin: 0;
     }
 
     button {
@@ -61,6 +86,7 @@
       transition: all 0.3s ease;
       box-shadow: 0 3px 8px var(--shadow);
       font-family: "Inter", sans-serif;
+      margin-top: 10px;
     }
 
     button:hover {
@@ -69,11 +95,11 @@
     }
 
     footer {
-      position: absolute;
-      bottom: 20px;
+      margin: 40px 0 20px;
       font-size: 0.85rem;
       color: #777;
       font-family: "Inter", sans-serif;
+      text-align: center;
     }
   </style>
 </head>
@@ -81,15 +107,36 @@
   <canvas id="bgCanvas"></canvas>
 
   <main>
-    <h1>Python</h1>
-    <p>Welcome to the Python section of <strong>Codeloop</strong> 🐍  
-       Explore projects, tips, and tutorials designed to help you learn and grow as a developer.</p>
+    <h1>Python 🐍</h1>
+
+    <div class="topic" onclick="openPage('intro.html')">
+      <h2>1️⃣ Introduction to Python Programming</h2>
+      <p>Learn what Python is, why it’s popular, and where it’s used.  
+      A gentle introduction to one of the most beginner-friendly languages.</p>
+    </div>
+
+    <div class="topic" onclick="openPage('setup.html')">
+      <h2>2️⃣ Python Setup</h2>
+      <p>Install Python on your computer, verify your setup, and prepare your environment  
+      to start coding confidently.</p>
+    </div>
+
+    <div class="topic" onclick="openPage('firstprogram.html')">
+      <h2>3️⃣ Your First Python Program</h2>
+      <p>Write your first Python program — “Hello, Codeloop!”  
+      Understand how Python runs and displays your code output.</p>
+    </div>
+
     <button onclick="window.location.href='index.html'">⬅ Back to Home</button>
   </main>
 
   <footer>Made with ✨ by Codeloop</footer>
 
   <script>
+    function openPage(page) {
+      window.open(page, "_blank", "noopener,noreferrer");
+    }
+
     // ---- Canvas doodle animation ----
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');

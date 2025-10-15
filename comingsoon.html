@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coming Soon | Codeloop</title>
+  <style>
+    :root {
+      --bg: #f9fafc;
+      --accent: #5b6cff;
+      --text: #2b2b2b;
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: "Inter", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: var(--bg);
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-family: "Patrick Hand", cursive;
+      color: var(--accent);
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #555;
+      animation: fadeIn 2s ease forwards;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 10px 25px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px var(--shadow);
+      font-family: "Inter", sans-serif;
+      animation: fadeInUp 2s ease forwards;
+    }
+
+    button:hover {
+      background: #6b7cff;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.85rem;
+      color: #777;
+      font-family: "Inter", sans-serif;
+      animation: fadeIn 3s ease forwards;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <main>
+    <h1>🚧 Coming Soon</h1>
+    <p>We’re working on something exciting for <strong>Codeloop</strong>!<br>Stay tuned for updates.</p>
+    <button onclick="window.location.href='index.html'">⬅ Back to Home</button>
+  </main>
+
+  <footer>Made with ✨ by Codeloop</footer>
+
+  <script>
+    // ---- Canvas doodle animation ----
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 3 + 1,
+          dx: (Math.random() - 0.5) * 0.8,
+          dy: (Math.random() - 0.5) * 0.8,
+        });
+      }
+    }
+    initParticles();
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "rgba(90, 110, 255, 0.1)";
+
+      // draw dots
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > w) p.dx *= -1;
+        if (p.y < 0 || p.y > h) p.dy *= -1;
+      }
+
+      // connecting lines
+      ctx.strokeStyle = "rgba(91,108,255,0.07)";
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+</body>
+</html>
